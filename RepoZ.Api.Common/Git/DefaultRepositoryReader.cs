@@ -80,7 +80,7 @@ namespace RepoZ.Api.Common.Git
                         LocalStaged = status?.Staged.Count(),
                         LocalRemoved = status?.Removed.Count(),
                         LocalIgnored = status?.Ignored.Count(),
-						RemoteUrls = repo.Network?.Remotes?.Select(r => r.Url).Where(url => !string.IsNullOrEmpty(url)).ToArray() ?? new string[0],
+                        RemoteUrls = this.BuildUrls(repo.Network?.Remotes, headDetails),
 						StashCount = repo.Stashes?.Count() ?? 0
                     };
                 }
@@ -108,6 +108,46 @@ namespace RepoZ.Api.Common.Git
                               .OrderBy(n => n).ToArray();
 
             return allBranches;
+        }
+
+        private string[] BuildUrls(RemoteCollection remotes, HeadDetails headDetails)
+        {
+            List<string> urls = new List<string>();
+            if (remotes != null)
+            {
+                //List<Remote> remotesList = remotes?.Where(r => !string.IsNullOrEmpty(r.Url) && !r.Url.StartsWith("git@")).ToList();
+                foreach (var remote in remotes)
+                {
+                    urls.Add(Urlify(remote.Url, headDetails.Name, "/-/commits/", true));
+                    urls.Add(Urlify(remote.Url, headDetails.Name, "/-/branches/all/", false));
+                }
+
+            }
+
+            return urls.ToArray();
+        }
+
+
+
+        private String Urlify(string gitRemoteUrl, string currentBranch, string path, bool branch)
+        {
+            // Transformer :
+            // git@			git2.april.interne.fr:distribution / aep / tarificateur - aep - web.git
+            // en
+            // https://	    git2.april.interne.fr/distribution/aep/tarificateur-aep-web.git
+
+            string url = gitRemoteUrl;
+
+            if (gitRemoteUrl.StartsWith("git@"))
+            {
+                url = url.Replace(":", "/");
+                url = url.Replace("git@", "https://");
+                url = url.Replace(".git", "");
+            }
+
+            url = string.Concat(url, path, branch?currentBranch:"");
+
+            return url;
         }
 
 		private HeadDetails GetHeadDetails(LibGit2Sharp.Repository repo)

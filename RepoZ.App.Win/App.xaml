@@ -88,19 +88,19 @@
 							 Color="{DynamicResource Primary500}" />
 			<SolidColorBrush x:Key="IdealForegroundDisabledBrush"
 							 Color="{DynamicResource Primary500}"
-							 Opacity="0.4" />
+							 Opacity="1" />
 
 			<Style TargetType="{x:Type controls:ZTextBox}" BasedOn="{StaticResource {x:Type TextBox}}" />
 
 			<Style TargetType="{x:Type controls:AcrylicContextMenu}" BasedOn="{StaticResource {x:Type ContextMenu}}" >
-				<Setter Property="Background" Value="#50000000" />
+				<Setter Property="Background" Value="Black" />
 				<Setter Property="FontSize" Value="13.5" />
 
 			</Style>
 
 
 			<Style TargetType="{x:Type controls:AcrylicMenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}" >
-				<Setter Property="Background" Value="Transparent"/>
+				<Setter Property="Background" Value="Black"/>
 			</Style>
 
 		</ResourceDictionary>
