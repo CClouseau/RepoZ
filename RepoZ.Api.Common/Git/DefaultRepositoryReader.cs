@@ -115,9 +115,10 @@ namespace RepoZ.Api.Common.Git
 			List<string> urls = new List<string>();
 			if (remotes != null)
 			{
-				//List<Remote> remotesList = remotes?.Where(r => !string.IsNullOrEmpty(r.Url) && !r.Url.StartsWith("git@")).ToList();
 				foreach (var remote in remotes)
 				{
+					// TODO: how can I know if the repo is "hosted" on GitLab or GitHub ? URLs on GITLab and GITHub differ from one "/-/"
+					// It's incorrect to assume that GITLab remote urls start with git@ and GIT
 					if (remote.Url.StartsWith("git@"))
 					{
 						urls.Add(Urlify(remote.Url, headDetails.Name, "/-/commits/", true));
@@ -126,16 +127,14 @@ namespace RepoZ.Api.Common.Git
 					}
 					else
 					{
-						urls.Add(Urlify(remote.Url, headDetails.Name, "/tree/", true));
+						urls.Add(Urlify(remote.Url, headDetails.Name, "/commits/", true));
+						urls.Add(Urlify(remote.Url, headDetails.Name, "/branches/all/", false));
 					}
 				}
-
 			}
 
 			return urls.ToArray();
 		}
-
-
 
 		private String Urlify(string gitRemoteUrl, string currentBranch, string path, bool branch)
 		{
@@ -155,9 +154,9 @@ namespace RepoZ.Api.Common.Git
 			else
 			{
 				url = url.Replace(".git", "");
-				url = string.Concat(url, path, branch ? currentBranch : "");
 			}
 
+			url = string.Concat(url, path, branch ? currentBranch : "");
 
 			return url;
 		}
