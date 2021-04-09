@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace RepoZ.Api.Git
@@ -13,6 +12,8 @@ namespace RepoZ.Api.Git
 
 		private static bool MatchesFilter(IRepositoryView repositoryView, string filter, bool useRegex)
 		{
+			repositoryView.TooltipInfo = repositoryView.Path;
+
 			if (string.IsNullOrEmpty(filter))
 				return true;
 
@@ -21,6 +22,7 @@ namespace RepoZ.Api.Git
 
 			string filterProperty = null;
 			string[] lfilterProperty = null;
+			List<string> matches = new List<string>();
 
 			// note, these are used in grr.RegexFilter as well
 			if (filter.StartsWith("n ", StringComparison.OrdinalIgnoreCase))
@@ -36,14 +38,16 @@ namespace RepoZ.Api.Git
 			if (filterProperty == null && lfilterProperty == null)
 				filterProperty = repositoryView.Name;
 			else
-				filter = filter.Substring(2);
+				filter = filter.Substring(2).Trim();
 
 			if (string.IsNullOrEmpty(filter))
 				return true;
 
 			if (lfilterProperty is string[])
 			{
+
 				bool matchFound = false;
+
 				foreach (string branchName in lfilterProperty)
 				{
 					if (useRegex)
@@ -51,9 +55,11 @@ namespace RepoZ.Api.Git
 					else
 						matchFound = branchName.IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1;
 
-					if (matchFound) return true;
+					if (matchFound) matches.Add(branchName);
 				}
-				return false;
+				if (matches.Count > 0)
+					repositoryView.TooltipInfo = string.Join(Environment.NewLine, matches.ToArray());
+				return matches.Count > 0;
 			}
 			else
 			{

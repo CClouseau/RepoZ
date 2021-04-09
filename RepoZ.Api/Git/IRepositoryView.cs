@@ -17,5 +17,7 @@ namespace RepoZ.Api.Git
 		string[] Tags { get; }
 
 		bool HasUnpushedChanges { get; }
+
+		string TooltipInfo { get; set; }
 	}
 }
