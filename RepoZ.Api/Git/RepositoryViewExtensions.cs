@@ -31,6 +31,8 @@ namespace RepoZ.Api.Git
 				filterProperty = repositoryView.Path;
 			else if (filter.StartsWith("a ", StringComparison.OrdinalIgnoreCase))
 				lfilterProperty = repositoryView.AllBranches;
+			else if (filter.StartsWith("t ", StringComparison.OrdinalIgnoreCase))
+				lfilterProperty = repositoryView.Tags;
 			if (filterProperty == null && lfilterProperty == null)
 				filterProperty = repositoryView.Name;
 			else

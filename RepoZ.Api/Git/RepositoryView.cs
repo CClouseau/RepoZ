@@ -55,6 +55,8 @@ namespace RepoZ.Api.Git
         
 		public string[] AllBranches => Repository.AllBranches ?? new string[0];
 
+		public string[] Tags => Repository.Tags ?? new string[0];
+
 		public string AheadBy => Repository.AheadBy?.ToString() ?? "";
 
 		public string BehindBy => Repository.BehindBy?.ToString() ?? "";

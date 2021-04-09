@@ -81,7 +81,8 @@ namespace RepoZ.Api.Common.Git
                         LocalRemoved = status?.Removed.Count(),
                         LocalIgnored = status?.Ignored.Count(),
 						RemoteUrls = repo.Network?.Remotes?.Select(r => r.Url).Where(url => !string.IsNullOrEmpty(url)).ToArray() ?? new string[0],
-						StashCount = repo.Stashes?.Count() ?? 0
+						StashCount = repo.Stashes?.Count() ?? 0,
+						Tags = repo.Tags?.Select(t => t.FriendlyName.ToString()).ToArray()
                     };
                 }
             }
