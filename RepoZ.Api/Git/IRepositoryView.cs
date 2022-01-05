@@ -14,6 +14,10 @@ namespace RepoZ.Api.Git
         
 		string[] AllBranches { get; }
 
+		string[] Tags { get; }
+
 		bool HasUnpushedChanges { get; }
+
+		string TooltipInfo { get; set; }
 	}
 }

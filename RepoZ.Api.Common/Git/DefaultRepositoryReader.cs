@@ -59,37 +59,38 @@ namespace RepoZ.Api.Common.Git
 
 					var headDetails = GetHeadDetails(repo);
 
-					return new Api.Git.Repository()
-					{
-						Name = workingDirectory.Name,
-						Path = workingDirectory.FullName,
-						Location = workingDirectory.Parent.FullName,
-						Branches = repo.Branches.Select(b => b.FriendlyName).ToArray(),
-						LocalBranches = repo.Branches.Where(b => !b.IsRemote).Select(b => b.FriendlyName).ToArray(),
-						AllBranches = this.GetAllBranches(repo),
-						CurrentBranch = headDetails.Name,
-						CurrentBranchHasUpstream = !string.IsNullOrEmpty(repo.Head.UpstreamBranchCanonicalName),
-						CurrentBranchIsDetached = headDetails.IsDetached,
-						CurrentBranchIsOnTag = headDetails.IsOnTag,
-						AheadBy = repo.Head.TrackingDetails?.AheadBy,
-						BehindBy = repo.Head.TrackingDetails?.BehindBy,
-						LocalUntracked = status?.Untracked.Count(),
-						LocalModified = status?.Modified.Count(),
-						LocalMissing = status?.Missing.Count(),
-						LocalAdded = status?.Added.Count(),
-						LocalStaged = status?.Staged.Count(),
-						LocalRemoved = status?.Removed.Count(),
-						LocalIgnored = status?.Ignored.Count(),
+                    return new Api.Git.Repository()
+                    {
+                        Name = workingDirectory.Name,
+                        Path = workingDirectory.FullName,
+                        Location = workingDirectory.Parent.FullName,
+                        Branches = repo.Branches.Select(b => b.FriendlyName).ToArray(),
+                        LocalBranches = repo.Branches.Where(b => !b.IsRemote).Select(b => b.FriendlyName).ToArray(),
+                        AllBranches = this.GetAllBranches(repo),
+                        CurrentBranch = headDetails.Name,
+                        CurrentBranchHasUpstream = !string.IsNullOrEmpty(repo.Head.UpstreamBranchCanonicalName),
+                        CurrentBranchIsDetached = headDetails.IsDetached,
+                        CurrentBranchIsOnTag = headDetails.IsOnTag,
+                        AheadBy = repo.Head.TrackingDetails?.AheadBy,
+                        BehindBy = repo.Head.TrackingDetails?.BehindBy,
+                        LocalUntracked = status?.Untracked.Count(),
+                        LocalModified = status?.Modified.Count(),
+                        LocalMissing = status?.Missing.Count(),
+                        LocalAdded = status?.Added.Count(),
+                        LocalStaged = status?.Staged.Count(),
+                        LocalRemoved = status?.Removed.Count(),
+                        LocalIgnored = status?.Ignored.Count(),
 						RemoteUrls = this.BuildUrls(repo.Network?.Remotes, headDetails),
-						StashCount = repo.Stashes?.Count() ?? 0
-					};
-				}
-			}
-			catch (Exception)
-			{
-				return Api.Git.Repository.Empty;
-			}
-		}
+						StashCount = repo.Stashes?.Count() ?? 0,
+						Tags = repo.Tags?.Select(t => t.FriendlyName.ToString()).ToArray()
+                    };
+                }
+            }
+            catch (Exception)
+            {
+                return Api.Git.Repository.Empty;
+            }
+        }
 
 		private string[] GetAllBranches(LibGit2Sharp.Repository repo)
 		{

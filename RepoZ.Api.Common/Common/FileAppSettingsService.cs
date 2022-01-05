@@ -79,6 +79,36 @@ namespace RepoZ.Api.Common.Common
 			}
 		}
 
+		public bool PruneOnFetch
+		{
+			get => Settings.PruneOnFetch;
+			set
+			{
+				if (value != Settings.PruneOnFetch)
+				{
+					Settings.PruneOnFetch = value;
+
+					NotifyChange();
+					Save();
+				}
+			}
+		}
+
+		public List<ApplicationPath> ExePaths
+		{
+			get => Settings.ExePaths;
+			set
+			{
+				if (value != Settings.ExePaths)
+				{
+					Settings.ExePaths = value;
+
+					NotifyChange();
+					Save();
+				}
+			}
+		}
+
 		public void RegisterInvalidationHandler(Action handler)
 		{
 			_invalidationHandlers.Add(handler);
@@ -88,6 +118,5 @@ namespace RepoZ.Api.Common.Common
 		{
 			_invalidationHandlers.ForEach(h => h.Invoke());
 		}
-
 	}
 }

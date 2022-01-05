@@ -52,8 +52,10 @@ namespace RepoZ.Api.Git
 		public string Location => Repository.Location ?? "";
 
 		public string CurrentBranch => Repository.CurrentBranch ?? "";
-        
+
 		public string[] AllBranches => Repository.AllBranches ?? new string[0];
+
+		public string[] Tags => Repository.Tags ?? new string[0];
 
 		public string AheadBy => Repository.AheadBy?.ToString() ?? "";
 
@@ -84,6 +86,8 @@ namespace RepoZ.Api.Git
 		public bool HasUnpushedChanges => Repository.HasUnpushedChanges;
 
 		public override int GetHashCode() => Repository.GetHashCode();
+
+		public string TooltipInfo { get; set; }
 
 		public Repository Repository { get; }
 

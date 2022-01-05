@@ -48,6 +48,8 @@ namespace RepoZ.Api.Git
 
         public string[] AllBranches { get; set; }
 
+        public string[] Tags { get; set; }
+
         public static Repository Empty => new Repository()
 		{
 			Name = "",
