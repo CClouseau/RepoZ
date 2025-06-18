@@ -26,5 +26,9 @@ namespace grrui.Model
         public string Path => Repository.Path ?? "";
 
         public bool HasUnpushedChanges => Repository.HasUnpushedChanges;
+
+        public string[] Tags { get; }
+
+        public string TooltipInfo { get; set; }
     }
 }
