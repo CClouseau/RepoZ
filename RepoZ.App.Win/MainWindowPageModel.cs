@@ -27,7 +27,8 @@ namespace RepoZ.App.Win
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AutoFetchDiscretely)));
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AutoFetchAdequate)));
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AutoFetchAggresive)));
-			}
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AutoFetchOnce)));
+            }
 		}
 
 		public bool AutoFetchOff
@@ -52,6 +53,11 @@ namespace RepoZ.App.Win
 		{
 			get => AutoFetchMode == AutoFetchMode.Aggresive;
 			set => AutoFetchMode = AutoFetchMode.Aggresive;
+		}
+				public bool AutoFetchOnce
+		{
+			get => AutoFetchMode == AutoFetchMode.Once;
+			set => AutoFetchMode = AutoFetchMode.Once;
 		}
 
 		public IAppSettingsService AppSettingsService { get; }
