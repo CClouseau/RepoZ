@@ -11,6 +11,7 @@ namespace RepoZ.Api.Common.Git.AutoFetch
 		Off = 0,
 		Discretely = 1,
 		Adequate = 2,
-		Aggresive = 3
+		Aggresive = 3,
+		Once = 4
 	}
 }
