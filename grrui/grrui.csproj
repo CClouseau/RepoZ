@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Net.Http.WinHttpHandler" Version="9.0.9" />
     <PackageReference Include="Terminal.Gui" Version="0.81.0" />
     <PackageReference Include="TextCopy" Version="4.2.0" />
   </ItemGroup>

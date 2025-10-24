@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="NetMQ" Version="4.0.0.207" />
+    <PackageReference Include="System.Net.Http.WinHttpHandler" Version="9.0.9" />
   </ItemGroup>
 
 </Project>
